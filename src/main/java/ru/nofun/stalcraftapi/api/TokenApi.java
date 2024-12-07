@@ -1,4 +1,4 @@
-package ru.nofun.stalcraft.api;
+package ru.nofun.stalcraftapi.api;
 
 import java.util.HashMap;
 import java.util.Map;
