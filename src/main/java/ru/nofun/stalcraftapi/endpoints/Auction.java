@@ -1,21 +1,21 @@
-package ru.nofun.stalcraftapi.auction;
+package ru.nofun.stalcraftapi.endpoints;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import ru.nofun.stalcraftapi.api.Api;
 import ru.nofun.stalcraftapi.schemas.LotListing;
 import ru.nofun.stalcraftapi.schemas.PricesListing;
-import ru.nofun.stalcraftapi.utils.Order;
-import ru.nofun.stalcraftapi.utils.Region;
-import ru.nofun.stalcraftapi.utils.Sort;
+
 import java.util.HashMap;
 import java.util.Map;
 
 //TODO: Response code
 public class Auction {
+    private final int DEFAULT_LIMIT = 20;
+    private final int DEFAULT_OFFSET = 0;
+
     private final Api api;
     private final Region region;
-
 
     public Auction(Api api, Region region) {
         this.api = api;
@@ -23,7 +23,11 @@ public class Auction {
     }
 
     public PricesListing getItemPriceHistory(String itemId) {
-        return this.getItemPriceHistory(itemId, 20, 0, false);
+        return this.getItemPriceHistory(
+                itemId,
+                DEFAULT_LIMIT,
+                DEFAULT_OFFSET,
+                false);
     }
 
     //TODO: params
@@ -44,7 +48,13 @@ public class Auction {
     }
 
     public LotListing getActiveItemLots(String itemId) {
-        return this.getActiveItemLots(itemId, 20, 0, Sort.CURRENT_PRICE, Order.ASC, false);
+        return this.getActiveItemLots(
+                itemId,
+                DEFAULT_LIMIT,
+                DEFAULT_OFFSET,
+                Sort.CURRENT_PRICE,
+                Order.ASC,
+                false);
     }
 
     public LotListing getActiveItemLots(String itemId, int limit, int offset, Sort sort, Order order, boolean additional) {

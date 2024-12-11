@@ -1,9 +1,8 @@
-package ru.nofun.stalcraftapi.character;
+package ru.nofun.stalcraftapi.endpoints;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import ru.nofun.stalcraftapi.api.Api;
 import ru.nofun.stalcraftapi.schemas.CharacterProfileData;
-import ru.nofun.stalcraftapi.utils.Region;
 
 
 public class Characters {

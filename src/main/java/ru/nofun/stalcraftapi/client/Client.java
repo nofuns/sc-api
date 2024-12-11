@@ -1,52 +1,46 @@
 package ru.nofun.stalcraftapi.client;
 
 import ru.nofun.stalcraftapi.api.Api;
-import ru.nofun.stalcraftapi.auction.Auction;
-import ru.nofun.stalcraftapi.clans.Clans;
-import ru.nofun.stalcraftapi.emission.Emission;
-import ru.nofun.stalcraftapi.character.Characters;
-import ru.nofun.stalcraftapi.utils.Region;
+import ru.nofun.stalcraftapi.api.TokenApi;
+import ru.nofun.stalcraftapi.endpoints.Auction;
+import ru.nofun.stalcraftapi.endpoints.Clans;
+import ru.nofun.stalcraftapi.endpoints.Emission;
+import ru.nofun.stalcraftapi.endpoints.Characters;
+import ru.nofun.stalcraftapi.endpoints.Region;
 
 
 public class Client {
-    String baseUrl;
     Api api;
     Region region;
 
-    public Client(Api api, Region region) {
-        this.api = api;
+    Auction auctionApi;
+    Clans clansApi;
+    Emission emissionApi;
+    Characters charactersApi;
+
+    public Client(String token, Region region) {
+        this.api = new TokenApi(token);
         this.region = region;
+
+        this.auctionApi = new Auction(this.api, region);
+        this.clansApi = new Clans(this.api, region);
+        this.emissionApi = new Emission(this.api, region);
+        this.charactersApi = new Characters(this.api, region);
     }
 
-    /**
-     * Factory method for auction requests
-     * @return new object for working with auction requests
-     */
     public Auction auction() {
-        return new Auction(this.api, this.region);
+        return auctionApi;
     }
 
-    /**
-     * Factory method for emission requests
-     * @return new object for working with emission requests
-     */
     public Emission emission() {
-        return new Emission(this.api, this.region);
+        return emissionApi;
     }
 
-    /**
-     * Factory method for character requests
-     * @return new object for working with character requests
-     */
     public Characters characters() {
-        return new Characters(this.api, this.region);
+        return charactersApi;
     }
 
-    /**
-     * Factory method for clans requests
-     * @return new object for working with clans requests
-     */
     public Clans clans() {
-        return new Clans(this.api, this.region);
+        return clansApi;
     }
 }

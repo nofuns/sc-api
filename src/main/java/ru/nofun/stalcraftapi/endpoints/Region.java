@@ -1,4 +1,4 @@
-package ru.nofun.stalcraftapi.utils;
+package ru.nofun.stalcraftapi.endpoints;
 
 public enum Region {
     RU("ru"),
@@ -12,7 +12,7 @@ public enum Region {
         this.region = region;
     }
 
-    public String toString() {
+    public String getRegion() {
         return region;
     }
 }

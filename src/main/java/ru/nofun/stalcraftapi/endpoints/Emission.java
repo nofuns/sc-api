@@ -1,9 +1,8 @@
-package ru.nofun.stalcraftapi.emission;
+package ru.nofun.stalcraftapi.endpoints;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import ru.nofun.stalcraftapi.api.Api;
 import ru.nofun.stalcraftapi.schemas.EmissionResponse;
-import ru.nofun.stalcraftapi.utils.Region;
 
 
 public class Emission {

@@ -1,4 +1,4 @@
-package ru.nofun.stalcraftapi.utils;
+package ru.nofun.stalcraftapi.endpoints;
 
 public enum Sort {
     TIME_CREATED("time_created"),
@@ -12,7 +12,7 @@ public enum Sort {
         this.sort = sort;
     }
 
-    public String toString() {
+    public String getSort() {
         return sort;
     }
 }

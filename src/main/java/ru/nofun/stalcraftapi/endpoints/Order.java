@@ -1,4 +1,4 @@
-package ru.nofun.stalcraftapi.utils;
+package ru.nofun.stalcraftapi.endpoints;
 
 public enum Order {
     ASC("asc"),
@@ -10,7 +10,7 @@ public enum Order {
         this.order = order;
     }
 
-    public String toString() {
+    public String getOrder() {
         return order;
     }
 }
