@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import ru.nofun.stalcraftapi.api.Api;
 import ru.nofun.stalcraftapi.schemas.EmissionResponse;
 
+import java.net.http.HttpResponse;
+
 
 public class Emission {
     private final Api api;
@@ -14,13 +16,11 @@ public class Emission {
         this.region = region;
     }
 
-    public EmissionResponse status() {
-        String path = String.format("/%s/emission", region);
+    public HttpResponse<String> statusRaw() {
+        return api.requestGet(String.format("/%s/emission", region));
+    }
 
-        try {
-            return EmissionResponse.fromJson(api.requestGet(path).body());
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+    public EmissionResponse status() throws JsonProcessingException {
+        return EmissionResponse.fromJson(statusRaw().body());
     }
 }

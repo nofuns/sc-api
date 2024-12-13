@@ -8,7 +8,6 @@ import ru.nofun.stalcraftapi.endpoints.Emission;
 import ru.nofun.stalcraftapi.endpoints.Characters;
 import ru.nofun.stalcraftapi.endpoints.Region;
 
-
 public class Client {
     Api api;
     Region region;

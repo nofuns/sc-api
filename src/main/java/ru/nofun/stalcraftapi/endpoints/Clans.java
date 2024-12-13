@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import ru.nofun.stalcraftapi.api.Api;
 import ru.nofun.stalcraftapi.schemas.ClanInfo;
 
+import java.net.http.HttpResponse;
+
 
 public class Clans {
     private final Api api;
@@ -14,12 +16,12 @@ public class Clans {
         this.region = region;
     }
 
-    public ClanInfo getClanInfo(String clanId) {
-        try {
-            return ClanInfo.fromJson(api.requestGet(String.format("/%s/clan/%s/info", region, clanId)).body());
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+    public HttpResponse<String> getClanInfoRaw(String clanId) {
+        return api.requestGet(String.format("/%s/clan/%s/info", region, clanId));
+    }
+
+    public ClanInfo getClanInfo(String clanId) throws JsonProcessingException {
+        return ClanInfo.fromJson(getClanInfoRaw(clanId).body());
     }
 
 }

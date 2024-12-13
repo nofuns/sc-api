@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import ru.nofun.stalcraftapi.api.Api;
 import ru.nofun.stalcraftapi.schemas.CharacterProfileData;
 
+import java.net.http.HttpResponse;
+
 
 public class Characters {
     private final Api api;
@@ -14,12 +16,12 @@ public class Characters {
         this.region = region;
     }
 
-    public CharacterProfileData getCharacterProfile(String characterName) {
+    public HttpResponse<String> getCharacterProfileRaw(String characterName) {
         String path = String.format("/%s/character/by-name/%s/profile", region, characterName);
-        try {
-            return CharacterProfileData.fromJson(api.requestGet(path).body());
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        return api.requestGet(path);
+    }
+
+    public CharacterProfileData getCharacterProfile(String characterName) throws JsonProcessingException {
+        return CharacterProfileData.fromJson(getCharacterProfileRaw(characterName).body());
     }
 }

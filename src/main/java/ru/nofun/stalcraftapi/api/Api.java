@@ -22,10 +22,6 @@ public abstract class Api {
         this.timeout = 5;
     }
 
-    /**
-     * Get default headers
-     * @return empty Map<String, String>
-     */
     public Map<String, String> getHeaders() {
         return new HashMap<>();
     }
