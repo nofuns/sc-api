@@ -15,8 +15,7 @@ public record Lot (
     String startTime,
     String endTime,
     Additional additional
-)
-{
+) {
     public static Lot fromJson(String json) throws JsonProcessingException {
         return new ObjectMapper().readValue(json, Lot.class);
     }

@@ -10,8 +10,7 @@ public record ClanMember(
     String name,
     String rank,
     String joinTime
-)
-{
+) {
     public static ClanMember fromJson(String json) throws JsonProcessingException {
         return new ObjectMapper().readValue(json, ClanMember.class);
     }

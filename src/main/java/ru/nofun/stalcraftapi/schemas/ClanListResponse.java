@@ -10,8 +10,7 @@ import java.util.ArrayList;
 public record ClanListResponse(
     int totalClans,
     ArrayList<ClanInfo> data
-)
-{
+) {
     public static ClanListResponse fromJson(String json) throws JsonProcessingException {
         return new ObjectMapper().readValue(json, ClanListResponse.class);
     }

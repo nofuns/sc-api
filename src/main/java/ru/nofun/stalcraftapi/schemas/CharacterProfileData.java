@@ -13,8 +13,7 @@ public record CharacterProfileData(
     String alliance,
     String lastLogin,
     ClanInfo clan
-)
-{
+) {
     public static CharacterProfileData fromJson(String json) throws JsonProcessingException {
         return new ObjectMapper().readValue(json, CharacterProfileData.class);
     }

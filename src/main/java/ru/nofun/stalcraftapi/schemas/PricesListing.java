@@ -10,8 +10,7 @@ import java.util.ArrayList;
 public record PricesListing (
     long total,
     ArrayList<PriceEntry> prices
-)
-{
+) {
     public static PricesListing fromJson(String json) throws JsonProcessingException {
         return new ObjectMapper().readValue(json, PricesListing.class);
     }

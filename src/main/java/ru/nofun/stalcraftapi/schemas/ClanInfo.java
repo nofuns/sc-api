@@ -17,8 +17,7 @@ public record ClanInfo (
     String description,
     String leader,
     int memberCount
-)
-{
+) {
     public static ClanInfo fromJson(String json) throws JsonProcessingException {
         return new ObjectMapper().readValue(json, ClanInfo.class);
     }

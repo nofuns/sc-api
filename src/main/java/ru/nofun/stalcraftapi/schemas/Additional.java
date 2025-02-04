@@ -28,8 +28,7 @@ public record Additional(
     int itemTransfersCount,
 
     String buyer
-)
-{
+) {
     public static Additional fromJson(String json) throws JsonProcessingException {
         return new ObjectMapper().readValue(json, Additional.class);
     }

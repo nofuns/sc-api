@@ -9,8 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public record FullCharacterInfo(
     CharacterMetaInfo info,
     CharacterClanInfo clan
-)
-{
+) {
     public static FullCharacterInfo fromJson(String json) throws JsonProcessingException {
         return new ObjectMapper().readValue(json, FullCharacterInfo.class);
     }

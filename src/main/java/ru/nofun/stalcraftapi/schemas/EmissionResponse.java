@@ -10,8 +10,7 @@ public record EmissionResponse (
     String currentStart,
     String previousStart,
     String previousEnd
-)
-{
+) {
     public static EmissionResponse fromJson(String json) throws JsonProcessingException {
         return new ObjectMapper().readValue(json, EmissionResponse.class);
     }

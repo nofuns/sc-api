@@ -11,8 +11,7 @@ public record PriceEntry (
     long price,
     String time,
     Additional additional
-)
-{
+) {
     public static PriceEntry fromJson(String json) throws JsonProcessingException {
         return new ObjectMapper().readValue(json, PriceEntry.class);
     }

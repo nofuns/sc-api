@@ -10,8 +10,7 @@ public record CharacterMetaInfo(
     String id,
     String name,
     String creationTime
-)
-{
+) {
     public static CharacterMetaInfo fromJson(String json) throws JsonProcessingException {
         return new ObjectMapper().readValue(json, CharacterMetaInfo.class);
     }
