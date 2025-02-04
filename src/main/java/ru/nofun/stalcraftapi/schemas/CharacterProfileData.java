@@ -7,12 +7,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record CharacterProfileData(
-        String username,
-        String uuid,
-        String status,
-        String alliance,
-        String lastLogin,
-        ClanInfo clan
+    String username,
+    String uuid,
+    String status,
+    String alliance,
+    String lastLogin,
+    ClanInfo clan
 )
 {
     public static CharacterProfileData fromJson(String json) throws JsonProcessingException {

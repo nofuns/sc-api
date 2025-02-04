@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record PricesListing (
-        long total,
-        ArrayList<PriceEntry> prices
+    long total,
+    ArrayList<PriceEntry> prices
 )
 {
     public static PricesListing fromJson(String json) throws JsonProcessingException {

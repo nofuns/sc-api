@@ -7,9 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record CharacterMetaInfo(
-        String id,
-        String name,
-        String creationTime
+    String id,
+    String name,
+    String creationTime
 )
 {
     public static CharacterMetaInfo fromJson(String json) throws JsonProcessingException {

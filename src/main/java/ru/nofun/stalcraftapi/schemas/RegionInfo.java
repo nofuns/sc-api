@@ -7,8 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record RegionInfo (
-        String id,
-        String name
+    String id,
+    String name
 )
 {
     public static RegionInfo fromJson(String json) throws JsonProcessingException {

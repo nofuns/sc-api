@@ -19,7 +19,7 @@ public abstract class Api {
     public Api() {
         this.baseUrl = "http://eapi.stalcraft.net";
         this.rateLimit = 200;
-        this.timeout = 5;
+        this.timeout = 20;
     }
 
     public Map<String, String> getHeaders() {

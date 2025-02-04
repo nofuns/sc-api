@@ -9,25 +9,25 @@ import java.util.ArrayList;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record Additional(
-        @JsonSetter("qlt")
-        int quality,
+    @JsonSetter("qlt")
+    int quality,
 
-        @JsonSetter("ptn")
-        int potential,
+    @JsonSetter("ptn")
+    int potential,
 
-        @JsonSetter("upgrade_bonus")
-        double upgradeBonus,
+    @JsonSetter("upgrade_bonus")
+    double upgradeBonus,
 
-        @JsonSetter("spawn_time")
-        long spawnTime,
+    @JsonSetter("spawn_time")
+    long spawnTime,
 
-        @JsonSetter("bonus_properties")
-        ArrayList<String> bonusProperties,
+    @JsonSetter("bonus_properties")
+    ArrayList<String> bonusProperties,
 
-        @JsonSetter("it_transf_count")
-        int itemTransfersCount,
+    @JsonSetter("it_transf_count")
+    int itemTransfersCount,
 
-        String buyer
+    String buyer
 )
 {
     public static Additional fromJson(String json) throws JsonProcessingException {

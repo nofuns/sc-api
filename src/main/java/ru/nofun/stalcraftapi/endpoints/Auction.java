@@ -11,8 +11,9 @@ import java.util.HashMap;
 
 
 public class Auction {
-    private final int DEFAULT_LIMIT = 20;
-    private final int DEFAULT_OFFSET = 0;
+    public static final int DEFAULT_LIMIT = 20;
+    public static final int DEFAULT_OFFSET = 0;
+    public static final int MAX_LIMIT = 200;
 
     private final Api api;
     private final Region region;
@@ -72,7 +73,7 @@ public class Auction {
 
         HashMap<String, String> params = new HashMap<>();
 
-        if (limit < 0 || limit > 200) throw new IllegalArgumentException("limit must be between 0 and 200");
+        if (limit < 0 || limit > MAX_LIMIT) throw new IllegalArgumentException(String.format("limit must be between 0 and %d", MAX_LIMIT));
 
         params.put("limit" , String.valueOf(limit));
         params.put("offset", String.valueOf(offset));

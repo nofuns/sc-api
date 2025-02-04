@@ -7,14 +7,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record Lot (
-        String itemId,
-        int amount,
-        long startPrice,
-        long currentPrice,
-        long buyoutPrice,
-        String startTime,
-        String endTime,
-        Additional additional
+    String itemId,
+    int amount,
+    long startPrice,
+    long currentPrice,
+    long buyoutPrice,
+    String startTime,
+    String endTime,
+    Additional additional
 )
 {
     public static Lot fromJson(String json) throws JsonProcessingException {

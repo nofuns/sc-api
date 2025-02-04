@@ -7,9 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record ClanMember(
-        String name,
-        String rank,
-        String joinTime
+    String name,
+    String rank,
+    String joinTime
 )
 {
     public static ClanMember fromJson(String json) throws JsonProcessingException {

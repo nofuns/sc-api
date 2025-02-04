@@ -7,8 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record FullCharacterInfo(
-        CharacterMetaInfo info,
-        CharacterClanInfo clan
+    CharacterMetaInfo info,
+    CharacterClanInfo clan
 )
 {
     public static FullCharacterInfo fromJson(String json) throws JsonProcessingException {

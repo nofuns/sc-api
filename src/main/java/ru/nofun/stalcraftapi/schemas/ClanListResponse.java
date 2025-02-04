@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record ClanListResponse(
-        int totalClans,
-        ArrayList<ClanInfo> data
+    int totalClans,
+    ArrayList<ClanInfo> data
 )
 {
     public static ClanListResponse fromJson(String json) throws JsonProcessingException {

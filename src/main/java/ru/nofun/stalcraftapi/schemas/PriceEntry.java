@@ -7,10 +7,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record PriceEntry (
-        int amount,
-        long price,
-        String time,
-        Additional additional
+    int amount,
+    long price,
+    String time,
+    Additional additional
 )
 {
     public static PriceEntry fromJson(String json) throws JsonProcessingException {
