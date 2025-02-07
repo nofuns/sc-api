@@ -1,5 +1,6 @@
 package ru.nofun.stalcraftapi.api;
 
+import java.net.http.HttpRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,12 +13,11 @@ public class TokenApi extends Api {
         this.token = token;
     }
 
-    public Map<String, String> getHeaders() {
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + token);
-        headers.put("Content-Type", "application/json");
-
-        return headers;
+    @Override
+    public ApiRequestBuilder newRequest() {
+        return new ApiRequestBuilder(baseUrl)
+                .header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json");
     }
 
 }

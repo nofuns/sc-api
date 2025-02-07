@@ -17,7 +17,11 @@ public class Emission {
     }
 
     public HttpResponse<String> statusRaw() {
-        return api.requestGet(String.format("/%s/emission", region));
+        var request = api.newRequest()
+                .path(String.format("/%s/emission", region))
+                .build();
+
+        return api.send(request);
     }
 
     public EmissionResponse status() throws JsonProcessingException {

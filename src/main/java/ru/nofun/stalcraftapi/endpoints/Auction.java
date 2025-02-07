@@ -5,9 +5,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import ru.nofun.stalcraftapi.api.Api;
 import ru.nofun.stalcraftapi.schemas.LotListing;
 import ru.nofun.stalcraftapi.schemas.PricesListing;
+import ru.nofun.stalcraftapi.utils.JsonParser;
 
 import java.net.http.HttpResponse;
-import java.util.HashMap;
 
 
 public class Auction {
@@ -23,20 +23,8 @@ public class Auction {
         this.region = region;
     }
 
-    public HttpResponse<String> getItemPriceHistoryRaw(String itemId) {
-        return this.getItemPriceHistoryRaw(
-                itemId,
-                DEFAULT_LIMIT,
-                DEFAULT_OFFSET,
-                false);
-    }
 
-    public HttpResponse<String> getItemPriceHistoryRaw(String itemId, int limit, int offset, boolean additional) {
-        String path = String.format("/%s/auction/%s/history", region, itemId);
-        return api.requestGet(path, getParams(limit, offset, additional));
-    }
-
-    public PricesListing getItemPriceHistory(String itemId) throws JsonProcessingException {
+    public PricesListing getItemPriceHistory(String itemId) {
         return this.getItemPriceHistory(
                 itemId,
                 DEFAULT_LIMIT,
@@ -45,13 +33,26 @@ public class Auction {
     }
 
     public PricesListing getItemPriceHistory(
-            String itemId, int limit, int offset, boolean additional) throws JsonProcessingException {
+            String itemId, int limit, int offset, boolean additional) {
 
         var responseRaw = getItemPriceHistoryRaw(itemId, limit, offset, additional);
-        return PricesListing.fromJson(responseRaw.body());
+        return JsonParser.parse(responseRaw.body(), PricesListing.class);
     }
 
-    public LotListing getActiveItemLots(String itemId) throws JsonProcessingException {
+    public HttpResponse<String> getItemPriceHistoryRaw(
+            String itemId, int limit, int offset, boolean additional) {
+
+        var apiRequest = api.newRequest()
+                .path(String.format("/%s/auction/%s/history", region, itemId))
+                .param("limit", String.valueOf(limit))
+                .param("offset", String.valueOf(offset))
+                .param("additional", additional ? "true" : "false")
+                .build();
+
+        return api.send(apiRequest);
+    }
+
+    public LotListing getActiveItemLots(String itemId) {
         return this.getActiveItemLots(
                 itemId,
                 DEFAULT_LIMIT,
@@ -62,32 +63,26 @@ public class Auction {
     }
 
     public LotListing getActiveItemLots(
-            String itemId, int limit, int offset, Sort sort, Order order, boolean additional) throws JsonProcessingException {
+            String itemId, int limit, int offset, Sort sort, Order order, boolean additional) {
 
-        String path = String.format("/%s/auction/%s/lots", region, itemId);
-        return LotListing.fromJson(api.requestGet(path, getParams(limit, offset, sort, order, additional)).body());
+        var response = getActiveItemLotsRaw(itemId, limit, offset, sort, order, additional);
+
+        return JsonParser.parse(response.body(), LotListing.class);
     }
 
-    private HashMap<String, String> getParams(
-            int limit, int offset, boolean additional) throws IllegalArgumentException {
+    public HttpResponse<String> getActiveItemLotsRaw(String itemId, int limit, int offset, Sort sort, Order order, boolean additional) {
+        if (limit < 0 || limit > MAX_LIMIT)
+            throw new IllegalArgumentException(String.format("limit must be between 0 and %d", MAX_LIMIT));
 
-        HashMap<String, String> params = new HashMap<>();
+        var apiRequest = api.newRequest()
+                .path(String.format("/%s/auction/%s/lots", region, itemId))
+                .param("limit", String.valueOf(limit))
+                .param("offset", String.valueOf(offset))
+                .param("sort", sort.toString())
+                .param("order", order.toString())
+                .param("additional", additional ? "true" : "false")
+                .build();
 
-        if (limit < 0 || limit > MAX_LIMIT) throw new IllegalArgumentException(String.format("limit must be between 0 and %d", MAX_LIMIT));
-
-        params.put("limit" , String.valueOf(limit));
-        params.put("offset", String.valueOf(offset));
-        params.put("additional", additional ? "true" : "false");
-        return params;
-    }
-
-    private HashMap<String, String> getParams(
-            int limit, int offset, Sort sort, Order order, boolean additional) throws IllegalArgumentException {
-
-        var params = getParams(limit, offset, additional);
-        params.put("sort", sort.toString());
-        params.put("order", order.toString());
-
-        return params;
+        return api.send(apiRequest);
     }
 }

@@ -17,7 +17,11 @@ public class Clans {
     }
 
     public HttpResponse<String> getClanInfoRaw(String clanId) {
-        return api.requestGet(String.format("/%s/clan/%s/info", region, clanId));
+        var request = api.newRequest()
+                .path(String.format("/%s/clan/%s/info", region, clanId))
+                .build();
+
+        return api.send(request);
     }
 
     public ClanInfo getClanInfo(String clanId) throws JsonProcessingException {

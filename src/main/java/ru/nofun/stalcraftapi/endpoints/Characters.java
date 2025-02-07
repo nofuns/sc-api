@@ -17,8 +17,11 @@ public class Characters {
     }
 
     public HttpResponse<String> getCharacterProfileRaw(String characterName) {
-        String path = String.format("/%s/character/by-name/%s/profile", region, characterName);
-        return api.requestGet(path);
+        var request = api.newRequest()
+                .path(String.format("/%s/character/by-name/%s/profile", region, characterName))
+                .build();
+
+        return api.send(request);
     }
 
     public CharacterProfileData getCharacterProfile(String characterName) throws JsonProcessingException {
