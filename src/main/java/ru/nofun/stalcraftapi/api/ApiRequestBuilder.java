@@ -12,12 +12,17 @@ public class ApiRequestBuilder {
 
     private final String baseUri;
     private String path;
-    private Map<String, String> headers = new HashMap<>();
-    private Map<String, String> params = new HashMap<>();
+    private final Map<String, String> headers = new HashMap<>();
+    private final Map<String, String> params = new HashMap<>();
 
     public ApiRequestBuilder(String baseUri) {
         this.baseUri = baseUri;
         this.path = "";
+    }
+
+    public ApiRequestBuilder timeout(int seconds) {
+        this.timeout = seconds;
+        return this;
     }
 
     public ApiRequestBuilder header(String key, String value) {
@@ -40,22 +45,26 @@ public class ApiRequestBuilder {
                 .uri(URI.create(this.buildUrl()))
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .timeout(Duration.ofSeconds(this.timeout));
+
         headers.forEach(requestBuilder::setHeader);
 
         return requestBuilder.build();
     }
 
     private String buildUrl() {
-        String finalUrl = baseUri + path;
+        return baseUri + path + paramsToString();
+    }
 
-        if (params != null && !params.isEmpty()) {
-            StringJoiner joiner = new StringJoiner("&");
-            for (Map.Entry<String, String> entry : params.entrySet()) {
-                joiner.add(String.format("%s=%s", entry.getKey(), entry.getValue()));
-            }
-            finalUrl += "?" + joiner;
+    private String paramsToString() {
+        if (params.isEmpty())
+            return "";
+
+        StringJoiner joiner = new StringJoiner("&");
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            joiner.add(String.format("%s=%s", entry.getKey(), entry.getValue()));
         }
 
-        return finalUrl;
+        return "?" + joiner;
+
     }
 }
