@@ -1,9 +1,5 @@
 package ru.nofun.stalcraftapi.api;
 
-import java.net.http.HttpRequest;
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class TokenApi extends Api {
     private final String token;

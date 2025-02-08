@@ -21,7 +21,6 @@ public class Auction {
         this.region = region;
     }
 
-
     public PricesListing getItemPriceHistory(String itemId) {
         return this.getItemPriceHistory(
                 itemId,
