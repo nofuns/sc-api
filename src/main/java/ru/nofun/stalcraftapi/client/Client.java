@@ -25,6 +25,10 @@ public class Client {
         this.charactersApi = new Characters(this.api, region);
     }
 
+    public Api getApi() {
+        return api;
+    }
+
     public Auction auction() {
         return auctionApi;
     }
