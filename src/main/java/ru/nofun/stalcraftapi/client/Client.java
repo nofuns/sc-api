@@ -9,17 +9,15 @@ import ru.nofun.stalcraftapi.endpoints.Characters;
 import ru.nofun.stalcraftapi.endpoints.Region;
 
 public class Client {
-    Api api;
-    Region region;
+    private final Api api;
 
-    Auction auctionApi;
-    Clans clansApi;
-    Emission emissionApi;
-    Characters charactersApi;
+    private final Auction auctionApi;
+    private final Clans clansApi;
+    private final Emission emissionApi;
+    private final Characters charactersApi;
 
     public Client(String token, Region region) {
         this.api = new TokenApi(token);
-        this.region = region;
 
         this.auctionApi = new Auction(this.api, region);
         this.clansApi = new Clans(this.api, region);
