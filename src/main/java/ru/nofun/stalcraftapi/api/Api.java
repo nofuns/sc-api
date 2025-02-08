@@ -10,12 +10,15 @@ public abstract class Api {
     public static final String DEMO_API = "https://dapi.stalcraft.net";
     public static final String PRODUCTION_API  = "https://eapi.stalcraft.net";
 
+    protected final HttpClient httpClient;
+
     protected final String baseUrl;
     protected final int rateLimit = 200;
     protected final long timeout = 20;
 
     public Api() {
         this.baseUrl = PRODUCTION_API;
+        this.httpClient = HttpClient.newHttpClient();
     }
 
     public ApiRequestBuilder newRequest() {
@@ -23,8 +26,8 @@ public abstract class Api {
     }
 
     public HttpResponse<String> send(HttpRequest request) {
-        try (HttpClient client = HttpClient.newHttpClient()) {
-            return client.send(request, HttpResponse.BodyHandlers.ofString());
+        try {
+            return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
             return null;
         }
