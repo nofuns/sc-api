@@ -1,8 +1,8 @@
 package ru.nofun.stalcraftapi.endpoints;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import ru.nofun.stalcraftapi.api.Api;
 import ru.nofun.stalcraftapi.schemas.EmissionResponse;
+import ru.nofun.stalcraftapi.utils.JsonParser;
 
 import java.net.http.HttpResponse;
 
@@ -24,7 +24,8 @@ public class Emission {
         return api.send(request);
     }
 
-    public EmissionResponse status() throws JsonProcessingException {
-        return EmissionResponse.fromJson(statusRaw().body());
+    public EmissionResponse status() {
+        var response = statusRaw();
+        return JsonParser.parse(response.body(), EmissionResponse.class);
     }
 }

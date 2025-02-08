@@ -1,8 +1,8 @@
 package ru.nofun.stalcraftapi.endpoints;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import ru.nofun.stalcraftapi.api.Api;
 import ru.nofun.stalcraftapi.schemas.ClanInfo;
+import ru.nofun.stalcraftapi.utils.JsonParser;
 
 import java.net.http.HttpResponse;
 
@@ -24,8 +24,9 @@ public class Clans {
         return api.send(request);
     }
 
-    public ClanInfo getClanInfo(String clanId) throws JsonProcessingException {
-        return ClanInfo.fromJson(getClanInfoRaw(clanId).body());
+    public ClanInfo getClanInfo(String clanId){
+        var response = getClanInfoRaw(clanId);
+        return JsonParser.parse(response.body(), ClanInfo.class);
     }
 
 }

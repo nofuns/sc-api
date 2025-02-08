@@ -1,7 +1,5 @@
 package ru.nofun.stalcraftapi.endpoints;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import ru.nofun.stalcraftapi.api.Api;
 import ru.nofun.stalcraftapi.schemas.LotListing;
 import ru.nofun.stalcraftapi.schemas.PricesListing;
@@ -66,11 +64,12 @@ public class Auction {
             String itemId, int limit, int offset, Sort sort, Order order, boolean additional) {
 
         var response = getActiveItemLotsRaw(itemId, limit, offset, sort, order, additional);
-
         return JsonParser.parse(response.body(), LotListing.class);
     }
 
-    public HttpResponse<String> getActiveItemLotsRaw(String itemId, int limit, int offset, Sort sort, Order order, boolean additional) {
+    public HttpResponse<String> getActiveItemLotsRaw(
+            String itemId, int limit, int offset, Sort sort, Order order, boolean additional) {
+
         if (limit < 0 || limit > MAX_LIMIT)
             throw new IllegalArgumentException(String.format("limit must be between 0 and %d", MAX_LIMIT));
 

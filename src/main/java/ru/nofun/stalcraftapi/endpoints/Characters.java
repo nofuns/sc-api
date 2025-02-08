@@ -1,8 +1,8 @@
 package ru.nofun.stalcraftapi.endpoints;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import ru.nofun.stalcraftapi.api.Api;
 import ru.nofun.stalcraftapi.schemas.CharacterProfileData;
+import ru.nofun.stalcraftapi.utils.JsonParser;
 
 import java.net.http.HttpResponse;
 
@@ -24,7 +24,8 @@ public class Characters {
         return api.send(request);
     }
 
-    public CharacterProfileData getCharacterProfile(String characterName) throws JsonProcessingException {
-        return CharacterProfileData.fromJson(getCharacterProfileRaw(characterName).body());
+    public CharacterProfileData getCharacterProfile(String characterName) {
+        var response = getCharacterProfileRaw(characterName);
+        return JsonParser.parse(response.body(), CharacterProfileData.class);
     }
 }

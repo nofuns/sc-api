@@ -2,10 +2,8 @@ package ru.nofun.stalcraftapi.schemas;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.util.ArrayList;
+
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record Additional(
@@ -29,7 +27,5 @@ public record Additional(
 
     String buyer
 ) {
-    public static Additional fromJson(String json) throws JsonProcessingException {
-        return new ObjectMapper().readValue(json, Additional.class);
-    }
+
 }
