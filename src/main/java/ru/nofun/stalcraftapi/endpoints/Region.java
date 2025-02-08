@@ -6,7 +6,7 @@ public enum Region {
     NA("na"),
     SEA("sea");
 
-    public final String region;
+    private final String region;
 
     Region(String region) {
         this.region = region;
