@@ -8,16 +8,24 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 public class ApiRequestBuilder {
-    private int timeout = 10;
 
-    private final String baseUri;
+    private static final int DEFAULT_TIMEOUT = 10;
+    private static final String ROOT_PATH = "";
+    private static final String URL_FORMAT = "https://%s.stalcraft.net%s%s";
+
+    private Version version;
     private String path;
     private final Map<String, String> headers = new HashMap<>();
     private final Map<String, String> params = new HashMap<>();
+    private int timeout = DEFAULT_TIMEOUT;
 
-    public ApiRequestBuilder(String baseUri) {
-        this.baseUri = baseUri;
-        this.path = "";
+    public ApiRequestBuilder() {
+        this.path = ROOT_PATH;
+    }
+
+    public ApiRequestBuilder version(Version version) {
+        this.version = version;
+        return this;
     }
 
     public ApiRequestBuilder timeout(int seconds) {
@@ -52,7 +60,7 @@ public class ApiRequestBuilder {
     }
 
     private String buildUrl() {
-        return baseUri + path + paramsToString();
+        return String.format(URL_FORMAT, version.getVersion(), path, paramsToString());
     }
 
     private String paramsToString() {
@@ -60,9 +68,7 @@ public class ApiRequestBuilder {
             return "";
 
         StringJoiner joiner = new StringJoiner("&");
-        for (Map.Entry<String, String> entry : params.entrySet()) {
-            joiner.add(String.format("%s=%s", entry.getKey(), entry.getValue()));
-        }
+        params.forEach((k, v) -> joiner.add(String.format("%s=%s", k, v)));
 
         return "?" + joiner;
 

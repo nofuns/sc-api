@@ -11,9 +11,10 @@ public class TokenApi extends Api {
 
     @Override
     public ApiRequestBuilder newRequest() {
-        return new ApiRequestBuilder(baseUrl)
+        return new ApiRequestBuilder()
                 .header("Authorization", "Bearer " + token)
-                .header("Content-Type", "application/json");
+                .header("Content-Type", "application/json")
+                .version(version);
     }
 
 }
