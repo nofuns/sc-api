@@ -8,7 +8,7 @@ public enum Sort {
 
     public final String sort;
 
-    Sort(String sort) {
+    private Sort(String sort) {
         this.sort = sort;
     }
 
