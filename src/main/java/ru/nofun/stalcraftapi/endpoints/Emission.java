@@ -1,13 +1,13 @@
 package ru.nofun.stalcraftapi.endpoints;
 
 import ru.nofun.stalcraftapi.api.Api;
+import ru.nofun.stalcraftapi.api.ApiResponse;
 import ru.nofun.stalcraftapi.schemas.EmissionResponse;
-import ru.nofun.stalcraftapi.utils.JsonParser;
-
-import java.net.http.HttpResponse;
 
 
 public class Emission {
+    private static final String EMISSION_ENDPOINT_FORMAT = "/%s/emission";
+
     private final Api api;
     private final Region region;
 
@@ -16,16 +16,11 @@ public class Emission {
         this.region = region;
     }
 
-    public HttpResponse<String> statusRaw() {
+    public ApiResponse<EmissionResponse> status() {
         var request = api.newRequest()
-                .path(String.format("/%s/emission", region))
+                .path(String.format(EMISSION_ENDPOINT_FORMAT, region))
                 .build();
 
-        return api.send(request);
-    }
-
-    public EmissionResponse status() {
-        var response = statusRaw();
-        return JsonParser.parse(response.body(), EmissionResponse.class);
+        return new ApiResponse<>(api.send(request), EmissionResponse.class);
     }
 }

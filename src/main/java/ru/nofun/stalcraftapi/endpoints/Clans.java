@@ -1,13 +1,13 @@
 package ru.nofun.stalcraftapi.endpoints;
 
 import ru.nofun.stalcraftapi.api.Api;
+import ru.nofun.stalcraftapi.api.ApiResponse;
 import ru.nofun.stalcraftapi.schemas.ClanInfo;
-import ru.nofun.stalcraftapi.utils.JsonParser;
-
-import java.net.http.HttpResponse;
 
 
 public class Clans {
+    private static final String CLANS_ENDPOINT_FORMAT = "/%s/clan/%s/info";
+
     private final Api api;
     private final Region region;
 
@@ -16,17 +16,11 @@ public class Clans {
         this.region = region;
     }
 
-    public HttpResponse<String> getClanInfoRaw(String clanId) {
+    public ApiResponse<ClanInfo> getClanInfo(String clanId) {
         var request = api.newRequest()
-                .path(String.format("/%s/clan/%s/info", region, clanId))
+                .path(String.format(CLANS_ENDPOINT_FORMAT, region, clanId))
                 .build();
 
-        return api.send(request);
+        return new ApiResponse<>(api.send(request), ClanInfo.class);
     }
-
-    public ClanInfo getClanInfo(String clanId){
-        var response = getClanInfoRaw(clanId);
-        return JsonParser.parse(response.body(), ClanInfo.class);
-    }
-
 }
