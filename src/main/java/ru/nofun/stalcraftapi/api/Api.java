@@ -7,22 +7,19 @@ import java.net.http.HttpResponse;
 
 
 public abstract class Api {
-    public static final String DEMO_API = "https://dapi.stalcraft.net";
-    public static final String PRODUCTION_API  = "https://eapi.stalcraft.net";
-
     protected final HttpClient httpClient;
 
-    protected final String baseUrl;
+    protected final Version version;
     protected final int rateLimit = 200;
     protected final long timeout = 20;
 
     public Api() {
-        this.baseUrl = PRODUCTION_API;
+        this.version = Version.PRODUCTION;
         this.httpClient = HttpClient.newHttpClient();
     }
 
     public ApiRequestBuilder newRequest() {
-        return new ApiRequestBuilder(baseUrl);
+        return new ApiRequestBuilder();
     }
 
     public HttpResponse<String> send(HttpRequest request) {
