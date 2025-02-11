@@ -14,6 +14,10 @@ public class ApiResponse <T> {
         this.tClass = tClass;
     }
 
+    public int status() {
+        return response.statusCode();
+    }
+
     public String body() {
         return response.body();
     }

@@ -1,5 +1,7 @@
 package ru.nofun.stalcraftapi.api;
 
+import ru.nofun.stalcraftapi.endpoints.Region;
+
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.time.Duration;
@@ -11,10 +13,11 @@ public class ApiRequestBuilder {
 
     private static final int DEFAULT_TIMEOUT = 10;
     private static final String ROOT_PATH = "";
-    private static final String URL_FORMAT = "https://%s.stalcraft.net%s%s";
+    private static final String URL_FORMAT = "https://%s.stalcraft.net/%s%s";
 
     private Version version;
     private String path;
+    private Region region;
     private final Map<String, String> headers = new HashMap<>();
     private final Map<String, String> params = new HashMap<>();
     private int timeout = DEFAULT_TIMEOUT;
@@ -25,6 +28,11 @@ public class ApiRequestBuilder {
 
     public ApiRequestBuilder version(Version version) {
         this.version = version;
+        return this;
+    }
+
+    public ApiRequestBuilder region(Region region) {
+        this.region = region;
         return this;
     }
 
@@ -60,7 +68,7 @@ public class ApiRequestBuilder {
     }
 
     private String buildUrl() {
-        return String.format(URL_FORMAT, version.getVersion(), path, paramsToString());
+        return String.format(URL_FORMAT, version.getVersion(), region.getRegion(), path);
     }
 
     private String paramsToString() {
@@ -68,9 +76,10 @@ public class ApiRequestBuilder {
             return "";
 
         StringJoiner joiner = new StringJoiner("&");
+        joiner.add("?");
         params.forEach((k, v) -> joiner.add(String.format("%s=%s", k, v)));
 
-        return "?" + joiner;
+        return joiner.toString();
 
     }
 }
