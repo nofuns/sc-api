@@ -13,26 +13,36 @@ import java.net.http.HttpResponse;
 public class Client {
     private final Api api;
     private final HttpClient httpClient;
+    private Region region;
 
-    public Client(Api api) {
+    public Client(Api api, Region region) {
         this.api = api;
+        this.region = region;
         this.httpClient = HttpClient.newHttpClient();
     }
 
-    public ApiResponse<PricesListing> lotPriceHistory(Region region, String itemId) {
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public ApiResponse<PricesListing> lotPriceHistory(String itemId) {
         var response = sendRequest(api.newRequest(region, new AuctionHistory(itemId)));
         return new ApiResponse<>(response, AuctionHistory.JSON_FORMAT);
     }
 
     public ApiResponse<PricesListing> lotPriceHistory(
-            Region region, String itemId, int limit, int offset, boolean additional) {
+            String itemId, int limit, int offset, boolean additional) {
 
         var response = sendRequest(api.newRequest(region, new AuctionHistory(itemId, limit, offset, additional)));
         return new ApiResponse<>(response, AuctionHistory.JSON_FORMAT);
     }
 
     public ApiResponse<LotListing> lotList(
-            Region region, String itemId, int limit, int offset, Order order, Sort sort, boolean additional) {
+            String itemId, int limit, int offset, Order order, Sort sort, boolean additional) {
 
         var response = sendRequest(
                 api.newRequest(
@@ -42,23 +52,22 @@ public class Client {
         return new ApiResponse<>(response, AuctionLots.JSON_FORMAT);
     }
 
-    public ApiResponse<LotListing> lotList(Region region, String itemId) {
-        ApiMethod method = new AuctionLots(itemId);
-        var response = sendRequest(api.newRequest(region, method));
+    public ApiResponse<LotListing> lotList(String itemId) {
+        var response = sendRequest(api.newRequest(region, new AuctionLots(itemId)));
         return new ApiResponse<>(response, AuctionLots.JSON_FORMAT);
     }
 
-    public ApiResponse<EmissionResponse> emissionInfo(Region region) {
+    public ApiResponse<EmissionResponse> emissionInfo() {
         var response = sendRequest(api.newRequest(region, new EmissionInfo()));
         return new ApiResponse<>(response, EmissionInfo.JSON_FORMAT);
     }
 
-    public ApiResponse<ClanInfo> clanInformation(Region region, String clanId) {
+    public ApiResponse<ClanInfo> clanInformation(String clanId) {
         var response = sendRequest(api.newRequest(region, new ClanInformation(clanId)));
         return new ApiResponse<>(response, ClanInformation.JSON_FORMAT);
     }
 
-    public ApiResponse<CharacterProfileData> characterInfo(Region region, String characterName) {
+    public ApiResponse<CharacterProfileData> characterInfo(String characterName) {
         var response = sendRequest(api.newRequest(region, new CharacterInfo(characterName)));
         return new ApiResponse<>(response, CharacterInfo.JSON_FORMAT);
     }
