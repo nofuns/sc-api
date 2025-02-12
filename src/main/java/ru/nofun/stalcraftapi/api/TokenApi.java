@@ -1,10 +1,12 @@
 package ru.nofun.stalcraftapi.api;
 
-
 import ru.nofun.stalcraftapi.endpoints.ApiMethod;
 import ru.nofun.stalcraftapi.endpoints.Region;
 
+import java.net.URI;
 import java.net.http.HttpRequest;
+import java.time.Duration;
+
 
 public class TokenApi extends Api {
     private final String token;
@@ -21,12 +23,12 @@ public class TokenApi extends Api {
 
     @Override
     public HttpRequest newRequest(Region region, ApiMethod method) {
-        return new ApiRequestBuilder()
+        return HttpRequest.newBuilder()
                 .header("Authorization", "Bearer " + token)
                 .header("Content-Type", "application/json")
-                .version(version)
-                .region(region)
-                .path(method.get())
+                .uri(URI.create(String.format(URL_FORMAT, version.getVersion(), region.getRegion(), method.get())))
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .timeout(Duration.ofSeconds(this.timeout))
                 .build();
     }
 }
