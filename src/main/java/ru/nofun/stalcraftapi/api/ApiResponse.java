@@ -14,8 +14,15 @@ public class ApiResponse <T> {
         this.tClass = tClass;
     }
 
-    public int status() {
-        return response.statusCode();
+    public ResponseStatus status() {
+        return switch (response.statusCode()) {
+            case 200 -> ResponseStatus.OK;
+            case 400 -> ResponseStatus.INVALID_PARAMETER;
+            case 401 -> ResponseStatus.UNAUTHORIZED;
+            case 404 -> ResponseStatus.NOT_FOUND;
+            case 429 -> ResponseStatus.RATE_LIMIT_EXCEEDED;
+            default -> ResponseStatus.UNKNOWN;
+        };
     }
 
     public String body() {
