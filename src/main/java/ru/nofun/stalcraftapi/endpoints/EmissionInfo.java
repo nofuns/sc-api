@@ -1,17 +1,14 @@
 package ru.nofun.stalcraftapi.endpoints;
 
+import lombok.NoArgsConstructor;
 
-import ru.nofun.stalcraftapi.schemas.EmissionResponse;
 
-public class EmissionInfo implements ApiMethod {
-    public static final Class<EmissionResponse> JSON_FORMAT = EmissionResponse.class;
-
+@NoArgsConstructor
+public class EmissionInfo extends ApiMethod {
     private static final String EMISSION_ENDPOINT_FORMAT = "/emission";
 
-    public EmissionInfo()
-    { }
-
-    public String get() {
+    @Override
+    public String getPath() {
         return EMISSION_ENDPOINT_FORMAT;
     }
 }

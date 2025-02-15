@@ -1,42 +1,77 @@
 package ru.nofun.stalcraftapi.api;
 
+import lombok.Getter;
+import lombok.Setter;
 import ru.nofun.stalcraftapi.endpoints.*;
-
-import java.net.URI;
-import java.net.http.HttpRequest;
-import java.time.Duration;
+import ru.nofun.stalcraftapi.schemas.*;
+import ru.nofun.stalcraftapi.utils.JsonParser;
 
 
-public abstract class Api {
-    protected static final int RATE_LIMIT = 200;
+public class Api {
+    private final ApiImpl apiImpl;
+    private final ApiRequestSender requestSender;
 
-    protected static final int DEFAULT_TIMEOUT = 10;
-    protected static final String URL_FORMAT = "https://%s.stalcraft.net/%s%s";
+    @Getter
+    @Setter
+    private Region region;
 
-    protected final Version version;
-    protected int timeout = DEFAULT_TIMEOUT;
-
-    public Api() {
-        this.version = Version.PRODUCTION;
+    public Api(ApiImpl apiImpl, Region region) {
+        this.apiImpl = apiImpl;
+        this.region = region;
+        this.requestSender = new ApiRequestSender();
     }
 
-    public Api(Version version) {
-        this.version = version;
+    public PricesListing lotPriceHistory(String itemId) {
+        return JsonParser.parse(sendRequest(new AuctionHistory(itemId)).body(), PricesListing.class);
     }
 
-    public void setTimeout(int timeout) {
-        this.timeout = timeout;
+    public PricesListing getLotPriceHistory(
+            String itemId, int limit, int offset, boolean additional) {
+
+        return JsonParser.parse(sendRequest(new AuctionHistory(itemId, limit, offset, additional)).body(), PricesListing.class);
     }
 
-    public static int getRateLimit() {
-        return RATE_LIMIT;
+    public LotListing getLotList(
+            String itemId, int limit, int offset, Order order, Sort sort, boolean additional) {
+
+        return JsonParser.parse(
+                sendRequest(
+                        new AuctionLots(itemId, limit, offset, order, sort, additional)).body(),
+                        LotListing.class);
     }
 
-    public HttpRequest newRequest(Region region, ApiMethod method) {
-        return HttpRequest.newBuilder()
-                .uri(URI.create(String.format(URL_FORMAT, version.getVersion(), region.getRegion(), method.get())))
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .timeout(Duration.ofSeconds(this.timeout))
-                .build();
+    public LotListing getLotList(String itemId) {
+        return JsonParser.parse(
+                sendRequest(
+                        new AuctionLots(itemId)).body(),
+                        LotListing.class);
+    }
+
+    public EmissionResponse getEmissionInfo() {
+        return JsonParser.parse(
+                sendRequest(
+                        new EmissionInfo()).body(),
+                        EmissionResponse.class);
+    }
+
+    public ClanInfo getClanInformation(String clanId) {
+        return JsonParser.parse(
+                sendRequest(
+                        new ClanInformation(clanId)).body(),
+                        ClanInfo.class);
+    }
+
+    public CharacterInfo getCharacterInfo(String characterName) {
+        return JsonParser.parse(
+                sendRequest(
+                        new CharacterInfo(characterName)).body(),
+                        CharacterInfo.class);
+    }
+
+    private ApiResponse sendRequest(ApiMethod method) {
+        return requestSender.send(apiImpl.newRequest()
+                .region(region)
+                .method(method)
+                .build());
     }
 }

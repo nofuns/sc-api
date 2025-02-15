@@ -1,5 +1,8 @@
 package ru.nofun.stalcraftapi.endpoints;
 
+import lombok.Getter;
+
+@Getter
 public enum Region {
     RU("ru"),
     EU("eu"),
@@ -10,9 +13,5 @@ public enum Region {
 
     private Region(String region) {
         this.region = region;
-    }
-
-    public String getRegion() {
-        return region;
     }
 }

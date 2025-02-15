@@ -1,6 +1,9 @@
 package ru.nofun.stalcraftapi.api;
 
+import lombok.Getter;
 
+
+@Getter
 public enum Version {
     DEMO("dapi"),
     PRODUCTION("eapi");
@@ -9,9 +12,5 @@ public enum Version {
 
     private Version(String version) {
         this.version = version;
-    }
-
-    public String getVersion() {
-        return version;
     }
 }

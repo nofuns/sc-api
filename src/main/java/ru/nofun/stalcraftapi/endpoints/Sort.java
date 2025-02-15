@@ -1,5 +1,8 @@
 package ru.nofun.stalcraftapi.endpoints;
 
+import lombok.Getter;
+
+@Getter
 public enum Sort {
     TIME_CREATED("time_created"),
     TIME_LEFT("time_left"),
@@ -10,9 +13,5 @@ public enum Sort {
 
     private Sort(String sort) {
         this.sort = sort;
-    }
-
-    public String getSort() {
-        return sort;
     }
 }

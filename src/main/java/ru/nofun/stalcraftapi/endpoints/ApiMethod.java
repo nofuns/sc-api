@@ -1,5 +1,6 @@
 package ru.nofun.stalcraftapi.endpoints;
 
-public interface ApiMethod {
-    String get();
+
+public abstract class ApiMethod{
+    public abstract String getPath();
 }
