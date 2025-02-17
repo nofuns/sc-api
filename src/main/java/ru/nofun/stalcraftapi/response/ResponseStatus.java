@@ -1,10 +1,9 @@
-package ru.nofun.stalcraftapi.api;
+package ru.nofun.stalcraftapi.response;
 
 import lombok.Getter;
 
 @Getter
 public enum ResponseStatus {
-    UNKNOWN(0),
     OK(200),
     INVALID_PARAMETER(400),
     UNAUTHORIZED(401),
