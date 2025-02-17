@@ -1,9 +1,7 @@
 package ru.nofun.stalcraftapi.api;
 
 import lombok.AllArgsConstructor;
-
-import java.util.HashMap;
-import java.util.Map;
+import ru.nofun.stalcraftapi.endpoints.ApiMethod;
 
 
 @AllArgsConstructor
@@ -12,8 +10,8 @@ public class SecretApi extends ApiImpl {
     private final String clientSecret;
 
     @Override
-    public ApiRequestBuilder newRequest() {
-        return new ApiRequestBuilder()
+    public <T> ApiRequestBuilder<T> newRequest(ApiMethod<T> method) {
+        return new ApiRequestBuilder<>(method)
                 .header("Client-Id", clientId)
                 .header("Client-Secret", clientSecret)
                 .header("Content-Type", "application/json")

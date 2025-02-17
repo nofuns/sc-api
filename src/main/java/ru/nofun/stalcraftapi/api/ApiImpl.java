@@ -2,6 +2,7 @@ package ru.nofun.stalcraftapi.api;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.nofun.stalcraftapi.endpoints.ApiMethod;
 
 
 @NoArgsConstructor
@@ -18,8 +19,8 @@ public abstract class ApiImpl {
         return RATE_LIMIT;
     }
 
-    public ApiRequestBuilder newRequest() {
-        return new ApiRequestBuilder()
+    public <T> ApiRequestBuilder<T> newRequest(ApiMethod<T> method) {
+        return new ApiRequestBuilder<>(method)
                 .version(version);
     }
 }
