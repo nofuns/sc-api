@@ -1,10 +1,13 @@
 package ru.nofun.stalcraftapi.endpoints;
 
 import lombok.AllArgsConstructor;
+import ru.nofun.stalcraftapi.schemas.LotListing;
 
 
 @AllArgsConstructor
-public class AuctionLots extends ApiMethod {
+public class AuctionLots extends ApiMethod <LotListing> {
+    private static Class<LotListing> jsonFormat = LotListing.class;
+
     public static final int MAX_LIMIT = 200;
 
     private static final String LOT_LISTING_PATH_FORMAT = "/auction/%s/lots";
@@ -25,5 +28,10 @@ public class AuctionLots extends ApiMethod {
     public String getPath() {
         return String.format(LOT_LISTING_PATH_FORMAT, itemId)
                 + String.format(PARAMS_FORMAT, limit, offset, order, sort, additional ? "true" : "false");
+    }
+
+    @Override
+    public Class<LotListing> getJsonFormat() {
+        return jsonFormat;
     }
 }

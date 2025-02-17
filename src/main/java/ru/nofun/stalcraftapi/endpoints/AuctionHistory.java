@@ -2,7 +2,9 @@ package ru.nofun.stalcraftapi.endpoints;
 
 import ru.nofun.stalcraftapi.schemas.PricesListing;
 
-public class AuctionHistory extends ApiMethod   {
+public class AuctionHistory extends ApiMethod<PricesListing> {
+    private static final Class<PricesListing> jsonFormat = PricesListing.class;
+
     public static final int MAX_LIMIT = 200;
 
     private static final String LOT_LISTING_PATH_FORMAT = "/auction/%s/history";
@@ -28,5 +30,10 @@ public class AuctionHistory extends ApiMethod   {
     public String getPath() {
         return String.format(LOT_LISTING_PATH_FORMAT, itemId)
                 + String.format(PARAMS_FORMAT, limit, offset, additional ? "true" : "false");
+    }
+
+    @Override
+    public Class<PricesListing> getJsonFormat() {
+        return jsonFormat;
     }
 }
