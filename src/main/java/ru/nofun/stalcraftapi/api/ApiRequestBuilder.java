@@ -8,7 +8,7 @@ import java.net.http.HttpRequest;
 import java.time.Duration;
 
 
-public class ApiRequestBuilder {
+public class ApiRequestBuilder<T> {
     private static final String URL_FORMAT = "https://%s.stalcraft.net/%s%s";
     private static final int DEFAULT_TIMEOUT = 10;
 
@@ -16,40 +16,36 @@ public class ApiRequestBuilder {
 
     private Version version;
     private Region region;
-    private ApiMethod method;
+    private final ApiMethod<T> method;
 
-    ApiRequestBuilder() {
+    public ApiRequestBuilder(ApiMethod<T> method) {
         requestBuilder = HttpRequest.newBuilder();
+        this.method = method;
     }
 
-    public ApiRequestBuilder header(String key, String value) {
+    public ApiRequestBuilder<T> header(String key, String value) {
         requestBuilder.header(key, value);
         return this;
     }
 
-    public ApiRequestBuilder version(Version version) {
+    public ApiRequestBuilder<T> version(Version version) {
         this.version = version;
         return this;
     }
 
-    public ApiRequestBuilder region(Region region) {
+    public ApiRequestBuilder<T> region(Region region) {
         this.region = region;
         return this;
     }
 
-    public ApiRequestBuilder method(ApiMethod method) {
-        this.method = method;
-        return this;
-    }
-
-    public ApiRequest build() {
+    public ApiRequest<T> build() {
         var httpRequest = requestBuilder
                 .uri(URI.create(String.format(URL_FORMAT, version.getVersion(), region.getRegion(), method.getPath())))
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .timeout(Duration.ofSeconds(DEFAULT_TIMEOUT))
                 .build();
 
-        return new ApiRequest(httpRequest);
+        return new ApiRequest<T>(httpRequest);
 
     }
 }
