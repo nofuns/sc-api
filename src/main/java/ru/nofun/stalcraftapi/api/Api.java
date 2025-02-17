@@ -3,9 +3,8 @@ package ru.nofun.stalcraftapi.api;
 import lombok.Getter;
 import lombok.Setter;
 import ru.nofun.stalcraftapi.endpoints.*;
+import ru.nofun.stalcraftapi.response.*;
 import ru.nofun.stalcraftapi.schemas.*;
-import ru.nofun.stalcraftapi.utils.JsonParser;
-
 
 public class Api {
     private final ApiImpl apiImpl;
@@ -21,57 +20,50 @@ public class Api {
         this.requestSender = new ApiRequestSender();
     }
 
-    public PricesListing lotPriceHistory(String itemId) {
-        return JsonParser.parse(sendRequest(new AuctionHistory(itemId)).body(), PricesListing.class);
+    public ApiResponse<PricesListing> lotPriceHistory(String itemId) {
+        return sendRequest(new AuctionHistory(itemId));
     }
 
-    public PricesListing getLotPriceHistory(
+    public ApiResponse<PricesListing> getLotPriceHistory(
             String itemId, int limit, int offset, boolean additional) {
 
-        return JsonParser.parse(sendRequest(new AuctionHistory(itemId, limit, offset, additional)).body(), PricesListing.class);
+        return sendRequest(new AuctionHistory(itemId, limit, offset, additional));
     }
 
-    public LotListing getLotList(
+    public ApiResponse<LotListing> getLotList(
             String itemId, int limit, int offset, Order order, Sort sort, boolean additional) {
 
-        return JsonParser.parse(
-                sendRequest(
-                        new AuctionLots(itemId, limit, offset, order, sort, additional)).body(),
-                        LotListing.class);
+        return sendRequest(new AuctionLots(itemId, limit, offset, order, sort, additional));
     }
 
-    public LotListing getLotList(String itemId) {
-        return JsonParser.parse(
-                sendRequest(
-                        new AuctionLots(itemId)).body(),
-                        LotListing.class);
+    public ApiResponse<LotListing> getLotList(String itemId) {
+        return sendRequest(new AuctionLots(itemId));
     }
 
-    public EmissionResponse getEmissionInfo() {
-        return JsonParser.parse(
-                sendRequest(
-                        new EmissionInfo()).body(),
-                        EmissionResponse.class);
+    public ApiResponse<EmissionResponse> getEmissionInfo() {
+        return sendRequest(new EmissionInfo());
     }
 
-    public ClanInfo getClanInformation(String clanId) {
-        return JsonParser.parse(
-                sendRequest(
-                        new ClanInformation(clanId)).body(),
-                        ClanInfo.class);
+    public ApiResponse<ClanInfo> getClanInformation(String clanId) {
+        return sendRequest(new ClanInformation(clanId));
     }
 
-    public CharacterInfo getCharacterInfo(String characterName) {
-        return JsonParser.parse(
-                sendRequest(
-                        new CharacterInfo(characterName)).body(),
-                        CharacterInfo.class);
+    public ApiResponse<FullCharacterInfo> getCharacterInfo(String characterName) {
+        return sendRequest(new CharacterInfo(characterName));
     }
 
-    private ApiResponse sendRequest(ApiMethod method) {
-        return requestSender.send(apiImpl.newRequest()
+    private <T> ApiResponse<T> sendRequest(ApiMethod<T> method) {
+        return requestSender.send(
+                apiImpl.newRequest(method)
                 .region(region)
-                .method(method)
                 .build());
+    }
+
+    private void Test() {
+        ApiImpl apiImpl = new TokenApi("");
+        var request = apiImpl.newRequest(new AuctionHistory("")).region(region).build();
+        ApiRequestSender requestSender = new ApiRequestSender();
+        var response = requestSender.send(request);
+
     }
 }
