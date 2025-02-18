@@ -9,11 +9,6 @@ import java.net.http.HttpRequest;
 @AllArgsConstructor
 @Getter
 public class ApiRequest <T> {
-    private HttpRequest request;
-    private TypeReference<T> jsonFormat;
-
-    public ApiRequest(HttpRequest request) {
-        this.request = request;
-        this.jsonFormat = new TypeReference<T>(){};
-    }
+    private final TypeReference<T> jsonFormat = new TypeReference<>(){};
+    private final HttpRequest request;
 }

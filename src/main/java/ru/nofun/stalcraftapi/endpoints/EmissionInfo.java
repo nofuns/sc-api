@@ -1,22 +1,22 @@
 package ru.nofun.stalcraftapi.endpoints;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.NoArgsConstructor;
 import ru.nofun.stalcraftapi.schemas.EmissionResponse;
 
 
 @NoArgsConstructor
 public class EmissionInfo extends ApiMethod<EmissionResponse> {
-    private static final Class<EmissionResponse> jsonFormat = EmissionResponse.class;
-
+    private static final TypeReference<EmissionResponse> jsonFormat = new TypeReference<>() {};
     private static final String EMISSION_ENDPOINT_FORMAT = "/emission";
 
     @Override
-    public String getPath() {
+    public String getMethod() {
         return EMISSION_ENDPOINT_FORMAT;
     }
 
     @Override
-    public Class<EmissionResponse> getJsonFormat() {
+    public TypeReference<EmissionResponse> getJsonFormat() {
         return jsonFormat;
     }
 }

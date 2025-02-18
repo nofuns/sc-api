@@ -8,14 +8,12 @@ import ru.nofun.stalcraftapi.utils.JsonParser;
 import java.net.http.HttpResponse;
 
 
+@AllArgsConstructor
 public class ApiResponse <T> {
-    private final HttpResponse<String> response;
-    private final TypeReference<T> jsonFormat;
+    private final TypeReference<T> jsonFormat = new TypeReference<>() {};
 
-    public ApiResponse(HttpResponse<String> response) {
-        this.response = response;
-        jsonFormat = new TypeReference<T>() {};
-    }
+    @NonNull
+    final HttpResponse<String> response;
 
     public ResponseStatus status() {
         return ResponseStatus.fromValue(response.statusCode());

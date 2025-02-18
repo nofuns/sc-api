@@ -11,10 +11,9 @@ public class SecretApi extends Api {
 
     @Override
     public <T> ApiRequestBuilder<T> newRequest(ApiMethod<T> method) {
-        return new ApiRequestBuilder<>(method)
+        return super.newRequest(method)
                 .header("Client-Id", clientId)
                 .header("Client-Secret", clientSecret)
-                .header("Content-Type", "application/json")
-                .version(version);
+                .header("Content-Type", "application/json");
     }
 }

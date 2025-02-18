@@ -2,6 +2,7 @@ package ru.nofun.stalcraftapi.response;
 
 import lombok.Getter;
 
+
 @Getter
 public enum ResponseStatus {
     OK(200),
@@ -17,11 +18,9 @@ public enum ResponseStatus {
     }
 
     static ResponseStatus fromValue(int statusCode) throws IllegalArgumentException {
-        for (ResponseStatus status : ResponseStatus.values()) {
-            if (status.statusCode == statusCode) {
+        for (ResponseStatus status : ResponseStatus.values())
+            if (status.statusCode == statusCode)
                 return status;
-            }
-        }
 
         throw new IllegalArgumentException("Invalid status code: " + statusCode);
     }

@@ -12,14 +12,13 @@ public class ApiRequestBuilder<T> {
     private static final String URL_FORMAT = "https://%s.stalcraft.net/%s%s";
     private static final int DEFAULT_TIMEOUT = 10;
 
-    HttpRequest.Builder requestBuilder;
+    private final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder();
 
     private Version version;
     private Region region;
     private final ApiMethod<T> method;
 
     public ApiRequestBuilder(ApiMethod<T> method) {
-        requestBuilder = HttpRequest.newBuilder();
         this.method = method;
     }
 
@@ -40,12 +39,12 @@ public class ApiRequestBuilder<T> {
 
     public ApiRequest<T> build() {
         var httpRequest = requestBuilder
-                .uri(URI.create(String.format(URL_FORMAT, version.getVersion(), region.getRegion(), method.getPath())))
+                .uri(URI.create(String.format(URL_FORMAT, version.getVersion(), region.getRegion(), method.getMethod())))
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .timeout(Duration.ofSeconds(DEFAULT_TIMEOUT))
                 .build();
 
-        return new ApiRequest<T>(httpRequest);
-
+        return new ApiRequest<>(httpRequest);
     }
+
 }
