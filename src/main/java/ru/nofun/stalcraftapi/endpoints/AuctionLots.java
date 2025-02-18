@@ -21,6 +21,34 @@ public class AuctionLots extends ApiMethod <LotListing> {
         this.itemId = itemId;
     }
 
+    public AuctionLots limit(int limit){
+        if (limit < 0 || limit > MAX_LIMIT)
+            throw new IllegalArgumentException("limit must be between 0 and " + MAX_LIMIT);
+
+        this.limit = limit;
+        return this;
+    }
+
+    public AuctionLots offset(int offset){
+        this.offset = offset;
+        return this;
+    }
+
+    public AuctionLots order(Order order){
+        this.order = order;
+        return this;
+    }
+
+    public AuctionLots sort(Sort sort){
+        this.sort = sort;
+        return this;
+    }
+
+    public AuctionLots additional(boolean additional){
+        this.additional = additional;
+        return this;
+    }
+
     @Override
     public String getMethod() {
         return String.format(LOT_LISTING_PATH_FORMAT, itemId)

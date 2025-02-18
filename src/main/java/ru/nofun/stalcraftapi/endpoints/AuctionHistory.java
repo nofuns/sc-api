@@ -15,15 +15,26 @@ public class AuctionHistory extends ApiMethod<PricesListing> {
     private int offset = 0;
     private boolean additional = false;
 
-    public AuctionHistory(String itemId){
+    public AuctionHistory(String itemId) {
         this.itemId = itemId;
     }
 
-    public AuctionHistory(String itemId, int limit, int offset, boolean additional) {
-        this.itemId = itemId;
+    public AuctionHistory limit(int limit) {
+        if (limit < 0 || limit > MAX_LIMIT)
+            throw new IllegalArgumentException("limit must be between 0 and " + MAX_LIMIT);
+
         this.limit = limit;
+        return this;
+    }
+
+    public AuctionHistory offset(int offset) {
         this.offset = offset;
+        return this;
+    }
+
+    public AuctionHistory additional(boolean additional) {
         this.additional = additional;
+        return this;
     }
 
     @Override

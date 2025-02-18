@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.net.http.HttpRequest;
 
+
 @AllArgsConstructor
 @Getter
 public class ApiRequest <T> {
