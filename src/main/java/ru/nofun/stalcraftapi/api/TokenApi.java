@@ -5,7 +5,7 @@ import ru.nofun.stalcraftapi.endpoints.ApiMethod;
 
 
 @AllArgsConstructor
-public class TokenApi extends ApiImpl {
+public class TokenApi extends Api {
     private final String token;
 
     @Override

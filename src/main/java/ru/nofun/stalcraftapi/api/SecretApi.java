@@ -5,7 +5,7 @@ import ru.nofun.stalcraftapi.endpoints.ApiMethod;
 
 
 @AllArgsConstructor
-public class SecretApi extends ApiImpl {
+public class SecretApi extends Api {
     private final String clientId;
     private final String clientSecret;
 
