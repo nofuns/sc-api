@@ -23,4 +23,8 @@ public class ApiMethods {
     public static EmissionInfo emissionInfo() {
         return new EmissionInfo();
     }
+
+    public static FriendList friendList(String characterName) {
+        return new FriendList(characterName);
+    }
 }
