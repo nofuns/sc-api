@@ -20,7 +20,7 @@ public class ApiMethods {
         return new ClanInformation(clanId);
     }
 
-    public static EmissionInfo lotList() {
+    public static EmissionInfo emissionInfo() {
         return new EmissionInfo();
     }
 }
