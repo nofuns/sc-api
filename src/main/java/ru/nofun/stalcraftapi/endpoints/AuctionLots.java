@@ -1,11 +1,10 @@
 package ru.nofun.stalcraftapi.endpoints;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import ru.nofun.stalcraftapi.schemas.LotListing;
 
 
 public class AuctionLots extends ApiMethod <LotListing> {
-    private static final TypeReference<LotListing> jsonFormat = new TypeReference<>() {};
+    private static final Class<LotListing> jsonFormat = LotListing.class;
     private static final String LOT_LISTING_PATH_FORMAT = "/auction/%s/lots";
     private static final String PARAMS_FORMAT = "?limit=%d&offset=%d&order=%s&sort=%s&additional=%s";
     public static final int MAX_LIMIT = 200;
@@ -56,7 +55,7 @@ public class AuctionLots extends ApiMethod <LotListing> {
     }
 
     @Override
-    public TypeReference<LotListing> getJsonFormat() {
+    public Class<LotListing> getJsonFormat() {
         return jsonFormat;
     }
 }

@@ -1,19 +1,21 @@
 package ru.nofun.stalcraftapi.response;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import ru.nofun.stalcraftapi.utils.JsonParser;
 
 import java.net.http.HttpResponse;
 
 
-@AllArgsConstructor
 public class ApiResponse <T> {
-    private final TypeReference<T> jsonFormat = new TypeReference<>() {};
-
     @NonNull
-    final HttpResponse<String> response;
+    protected final HttpResponse<String> response;
+    private final Class<T> jsonFormat;
+    private T schemas = null;
+
+    public ApiResponse(@NonNull HttpResponse<String> response, @NonNull Class<T> jsonFormat) {
+        this.response = response;
+        this.jsonFormat = jsonFormat;
+    }
 
     public ResponseStatus status() {
         return ResponseStatus.fromValue(response.statusCode());
@@ -23,7 +25,11 @@ public class ApiResponse <T> {
         return response.body();
     }
 
-    public T asSchemas() {
-        return JsonParser.parse(response.body(), jsonFormat);
+    public T schemas() {
+        if (schemas == null) {
+            schemas = JsonParser.parse(body(), jsonFormat);
+        }
+        return schemas;
     }
+
 }

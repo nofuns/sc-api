@@ -44,7 +44,7 @@ public class ApiRequestBuilder<T> {
                 .timeout(Duration.ofSeconds(DEFAULT_TIMEOUT))
                 .build();
 
-        return new ApiRequest<>(httpRequest);
+        return new ApiRequest<>(httpRequest, method.getJsonFormat());
     }
 
 }

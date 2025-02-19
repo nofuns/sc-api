@@ -1,13 +1,12 @@
 package ru.nofun.stalcraftapi.endpoints;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.AllArgsConstructor;
 import ru.nofun.stalcraftapi.schemas.FullCharacterInfo;
 
 
 @AllArgsConstructor
 public class CharacterInfo extends ApiMethod<FullCharacterInfo> {
-    private static final TypeReference<FullCharacterInfo> jsonFormat = new TypeReference<>() {};
+    private static final Class<FullCharacterInfo> jsonFormat = FullCharacterInfo.class;
     private static final String CHARACTERS_ENDPOINT_FORMAT = "/character/by-name/%s/profile";
 
     private final String characterName;
@@ -18,7 +17,7 @@ public class CharacterInfo extends ApiMethod<FullCharacterInfo> {
     }
 
     @Override
-    public TypeReference<FullCharacterInfo> getJsonFormat() {
+    public Class<FullCharacterInfo> getJsonFormat() {
         return jsonFormat;
     }
 }
