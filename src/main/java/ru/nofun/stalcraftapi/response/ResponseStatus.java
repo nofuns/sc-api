@@ -13,7 +13,7 @@ public enum ResponseStatus {
 
     private final int statusCode;
 
-    private ResponseStatus(int statusCode) {
+    ResponseStatus(int statusCode) {
         this.statusCode = statusCode;
     }
 

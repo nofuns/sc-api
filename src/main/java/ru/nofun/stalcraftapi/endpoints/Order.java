@@ -9,7 +9,7 @@ public enum Order {
 
     public final String order;
 
-    private Order(String order) {
+    Order(String order) {
         this.order = order;
     }
 }

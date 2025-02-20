@@ -11,7 +11,7 @@ public enum Region {
 
     private final String region;
 
-    private Region(String region) {
+    Region(String region) {
         this.region = region;
     }
 }

@@ -10,7 +10,7 @@ public enum Version {
 
     private final String version;
 
-    private Version(String version) {
+    Version(String version) {
         this.version = version;
     }
 }
