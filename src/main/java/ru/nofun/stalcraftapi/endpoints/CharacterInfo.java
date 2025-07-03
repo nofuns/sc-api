@@ -5,14 +5,14 @@ import ru.nofun.stalcraftapi.schemas.FullCharacterInfo;
 
 
 @AllArgsConstructor
-public class CharacterInfo extends ApiMethod<FullCharacterInfo> {
+public class CharacterInfo extends ApiGetMethod<FullCharacterInfo> {
     private static final Class<FullCharacterInfo> jsonFormat = FullCharacterInfo.class;
     private static final String CHARACTERS_ENDPOINT_FORMAT = "/character/by-name/%s/profile";
 
     private final String characterName;
 
     @Override
-    public String getMethod() {
+    public String getApiMethod() {
         return String.format(CHARACTERS_ENDPOINT_FORMAT, characterName);
     }
 

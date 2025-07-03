@@ -16,6 +16,7 @@ public class ApiRequestBuilder<T> {
 
     private Version version;
     private Region region;
+    private int timeout = DEFAULT_TIMEOUT;
     private final ApiMethod<T> method;
 
     public ApiRequestBuilder(ApiMethod<T> method) {
@@ -39,9 +40,9 @@ public class ApiRequestBuilder<T> {
 
     public ApiRequest<T> build() {
         var httpRequest = requestBuilder
-                .uri(URI.create(String.format(URL_FORMAT, version.getVersion(), region.getRegion(), method.getMethod())))
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .timeout(Duration.ofSeconds(DEFAULT_TIMEOUT))
+                .uri(URI.create(String.format(URL_FORMAT, version.getVersion(), region.getRegion(), method.getApiMethod())))
+                .method(method.getHttpMethod().toString(), HttpRequest.BodyPublishers.noBody())
+                .timeout(Duration.ofSeconds(timeout))
                 .build();
 
         return new ApiRequest<>(httpRequest, method.getJsonFormat());

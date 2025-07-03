@@ -3,7 +3,7 @@ package ru.nofun.stalcraftapi.endpoints;
 import ru.nofun.stalcraftapi.schemas.LotListing;
 
 
-public class AuctionLots extends ApiMethod <LotListing> {
+public class AuctionLots extends ApiGetMethod <LotListing> {
     private static final Class<LotListing> jsonFormat = LotListing.class;
     private static final String LOT_LISTING_PATH_FORMAT = "/auction/%s/lots";
     private static final String PARAMS_FORMAT = "?limit=%d&offset=%d&order=%s&sort=%s&additional=%s";
@@ -49,7 +49,7 @@ public class AuctionLots extends ApiMethod <LotListing> {
     }
 
     @Override
-    public String getMethod() {
+    public String getApiMethod() {
         return String.format(LOT_LISTING_PATH_FORMAT, itemId)
                 + String.format(PARAMS_FORMAT, limit, offset, order, sort, additional ? "true" : "false");
     }
