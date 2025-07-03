@@ -5,14 +5,14 @@ import ru.nofun.stalcraftapi.schemas.ClanInfo;
 
 
 @AllArgsConstructor
-public class ClanInformation extends ApiMethod<ClanInfo> {
+public class ClanInformation extends ApiGetMethod<ClanInfo> {
     private static final Class<ClanInfo> jsonFormat = ClanInfo.class;
     private static final String CHARACTERS_ENDPOINT_FORMAT = "/character/by-name/%s/profile";
 
     private final String clanId;
 
     @Override
-    public String getMethod() {
+    public String getApiMethod() {
         return String.format(CHARACTERS_ENDPOINT_FORMAT, clanId);
     }
 
